@@ -1,5 +1,8 @@
 define(['./config'], function(config) {
   
+  /**
+   * Basic class constructor.
+   */
   function Ball() {
     this.x = config.CANVAS.WIDTH / 2;
     this.y = config.CANVAS.HEIGHT / 2;
@@ -10,13 +13,20 @@ define(['./config'], function(config) {
     };
   }
 
+  /**
+   * Updates the balls status
+   *
+   * @param {Array} players An array of player objects we need to compare whether the ball hits a player.
+   *
+   * @return void
+   */
   Ball.prototype.update = function(players) {
     this.x += this.direction.x;
     this.y += this.direction.y;
     
     /* check score */
     if (this.x <= 0 || this.x >= config.CANVAS.WIDTH) {
-      // trigger score event
+      return this.x <= 0 ? "left" : "right";
     }
     
     /* check wall collision */
@@ -40,11 +50,27 @@ define(['./config'], function(config) {
     }
   }
 
+  /**
+   * Draws the ball on the canvas.
+   *
+   * @param {String} canvas The canvas you want the ball to draw on.
+   *
+   * @return void
+   */
   Ball.prototype.draw = function(canvas) {
     canvas.beginPath();
     canvas.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
     canvas.fillStyle = config.BALL.COLOR;
     canvas.fill();
+  }
+
+  Ball.prototype.reset = function(result) {
+    this.x = config.CANVAS.WIDTH / 2;
+    this.y = config.CANVAS.HEIGHT / 2;
+    this.direction = {
+      x: result === "left" ? -config.BALL.SPEED : config.BALL.SPEED,
+      y: 0
+    };
   }
 
   return new Ball();

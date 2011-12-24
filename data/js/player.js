@@ -1,8 +1,7 @@
 define(["./config"], function(config) {
 
   /**
-   * 
-   *
+   * Basic class constructor.
    */
   function Player() {
     this.width = config.PLAYER.WIDTH;
@@ -25,17 +24,12 @@ define(["./config"], function(config) {
   }
 
   /**
-   * Updates the player position.
+   * Ensures that the player cant leave the board.
    *
    * @return void
    */
-  Player.prototype.update = function() {
-    /*if (keydown.up) {
-      this.y += config.PLAYER_SPEED;
-    } else if (keydown.down) {
-      this.y -= config.PLAYER_SEED;
-    }*/
-    // check that player cant leave the baord
+  Player.prototype.ensureIsInField = function() {
+    this.y = Math.max(Math.min(this.y, config.CANVAS.HEIGHT - this.height), 0);
   }
 
   return new Player();

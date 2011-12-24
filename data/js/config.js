@@ -10,14 +10,14 @@ define({
   BOARD: {
     HEIGHT: 500,
     WIDTH: 700,
-    FPS: 30,
+    FPS: 60,
     OUTLINE_COLOR: 'white'
   },
 
   /* Player definitions */
   PLAYER: {
-    WIDTH: 10,
-    HEIGHT: 100,
+    WIDTH: 15,
+    HEIGHT: 60,
     COLOR: 'white',
     SPEED: 5 
   },
@@ -25,8 +25,8 @@ define({
   /* Ball definitions */
   BALL: {
     COLOR: 'white',
-    RADIUS: 10,
-    SPEED: 3 
+    RADIUS: 8,
+    SPEED: 11
   }
 
 });
