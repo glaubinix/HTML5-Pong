@@ -37,14 +37,18 @@ define(['./config'], function(config) {
     /* check player collision */
     if (this.direction.x < 0) {
       if (this.x - this.radius <= players[0].x + players[0].width) {
-        if (this.y > players[0].y && this.y < players[0].y + players[0].height) {
-          this.direction.x *= -1;
+        if (this.y + this.radius > players[0].y && this.y - this.radius < players[0].y + players[0].height) {
+          var pos = this.y - players[0].y - players[0].height / 2;
+          this.direction.x = config.BALL.SPEED * Math.cos(Math.PI * pos / players[0].height);
+          this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * pos / players[0].height);
         }
       }
     } else {
       if (this.x + this.radius >= players[1].x) {
           if (this.y > players[1].y && this.y < players[1].y + players[1].height) {
-            this.direction.x *= -1;
+            var pos = this.y - players[1].y - players[1].height / 2;
+            this.direction.x = -config.BALL.SPEED * Math.cos(Math.PI * pos / players[1].height);
+            this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * pos / players[1].height);
           }
         }
     }
@@ -70,6 +74,13 @@ define(['./config'], function(config) {
     this.direction = {
       x: result === "left" ? -config.BALL.SPEED : config.BALL.SPEED,
       y: 0
+    };
+  }
+  
+  Ball.prototype.getPosition = function() {
+    return position = {
+      x: this.x,
+      y: this.y
     };
   }
 

@@ -32,5 +32,5 @@ define(["./config"], function(config) {
     this.y = Math.max(Math.min(this.y, config.CANVAS.HEIGHT - this.height), 0);
   }
 
-  return new Player();
+  return Player;
 });

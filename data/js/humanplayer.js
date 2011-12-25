@@ -1,9 +1,4 @@
-define(["./config", "./player"], function(config) {
-  
-  /**
-   * Inherit from player.
-   */
-  HumanPlayer.prototype = require('./player');
+define(["./config", "./player"], function(config, Player) {
   
   /**
    * Basic class constructor.
@@ -11,6 +6,11 @@ define(["./config", "./player"], function(config) {
   function HumanPlayer() {
     this.x = config.CANVAS.WIDTH - this.width - 10;
   }
+  
+  /**
+   * Inherits from player.
+   */
+  HumanPlayer.prototype = new Player();
   
   /**
    * Updates the player position.
@@ -27,5 +27,5 @@ define(["./config", "./player"], function(config) {
     this.ensureIsInField();
   }
   
-  return new HumanPlayer();
+  return HumanPlayer;
 });

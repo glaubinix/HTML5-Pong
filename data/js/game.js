@@ -1,11 +1,14 @@
-define(['require', './config', './npcplayer', './humanplayer', './board', './ball'], function(require, config) {
+define(['require', './config', './npcplayer', './humanplayer', './board', './ball'], function(require, config, NpcPlayer, HumanPlayer) {
 
+  /*
+   * Basic class constructor.
+   */
   function Game() {
     this.board = require('./board');
     this.ball = require('./ball');
     this.players = [];
-    player1 = require('./npcplayer');
-    player2 = require('./humanplayer');
+    player1 = new NpcPlayer();
+    player2 = new HumanPlayer();
     this.players.push(player1);
     this.players.push(player2);
     this.score = {
@@ -14,9 +17,15 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     }
   }
   
+  /**
+   * Game update function, updates all the games elements.
+   *
+   * @return void
+   */
   Game.prototype.update = function() {
+    var that = this;
     this.players.forEach(function(player) {
-      player.update();
+      player.update(that.ball);
     });
     var result = this.ball.update(this.players);
     if (result !== undefined) {
@@ -25,6 +34,11 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     }
   }
   
+  /**
+   * Game drawing function, draws all the elements onto the canvas.
+   *
+   * @return void
+   */
   Game.prototype.draw = function() {
     var that = this;
     this.board.clear();
@@ -35,6 +49,11 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     this.ball.draw(this.board.getCanvas());    
   }
   
+  /**
+   * Updates the score board
+   *
+   * @return void
+   */
   Game.prototype.updateScore = function(result) {
     if (result === "left") {
       this.score.right += 1;
@@ -43,10 +62,5 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     }
   }
   
-  var game = new Game();
-  setInterval(function() {
-    game.update();
-    game.draw();
-  }, 1000 / config.BOARD.FPS);
-
+  return Game;
 });
