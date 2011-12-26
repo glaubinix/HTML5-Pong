@@ -7,20 +7,20 @@ define(["./config"], function(config) {
     this.width = config.PLAYER.WIDTH;
     this.height = config.PLAYER.HEIGHT;
     this.color = config.PLAYER.COLOR;
-    this.x = 10;
+    this.x = config.PLAYER.MARGIN;
     this.y = config.CANVAS.HEIGHT / 2 - this.height / 2;
   }
 
   /**
    * Draw the player on to the canvas.
    *
-   * @param {String} canvas The canvas you wont the player to draw on.
+   * @param {String} board The board you wont the player to draw on.
    *
    * @return void
    */
-  Player.prototype.draw = function(canvas) {
-    canvas.fillStyle = this.color;
-    canvas.fillRect(this.x, this.y, this.width, this.height);
+  Player.prototype.draw = function(board) {
+    board.getCanvas().fillStyle = this.color;
+    board.getCanvas().fillRect(this.x * board.getWidthFactor(), this.y, this.width * board.getWidthFactor(), this.height * board.getHeightFactor());
   }
 
   /**
@@ -28,8 +28,8 @@ define(["./config"], function(config) {
    *
    * @return void
    */
-  Player.prototype.ensureIsInField = function() {
-    this.y = Math.max(Math.min(this.y, config.CANVAS.HEIGHT - this.height), 0);
+  Player.prototype.ensureIsInField = function(board) {
+    this.y = Math.max(Math.min(this.y, board.getCanvas().canvas.height - this.height * board.getHeightFactor()), 0);
   }
 
   return Player;

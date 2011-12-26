@@ -19,7 +19,7 @@ define(["./config", "./player"], function(config, Player) {
    *
    * @return void
    */
-  NpcPlayer.prototype.update = function(ball) {
+  NpcPlayer.prototype.update = function(board, ball) {
     var ball_pos = ball.getPosition();
     if (Math.abs(this.y + this.height / 2 - ball_pos.y) > config.PLAYER.SPEED) {
       if (this.y + this.height / 2 > ball_pos.y) {
@@ -27,7 +27,7 @@ define(["./config", "./player"], function(config, Player) {
       } else if (this.y + this.height / 2 < ball_pos.y) {
         this.y += config.PLAYER.SPEED;
       }
-      this.ensureIsInField();
+      this.ensureIsInField(board);
     }
   }
   

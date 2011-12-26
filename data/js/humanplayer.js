@@ -17,14 +17,14 @@ define(["./config", "./player"], function(config, Player) {
    *
    * @return void
    */
-  HumanPlayer.prototype.update = function() {
+  HumanPlayer.prototype.update = function(board) {
     if (keydown.up) {
-      this.y -= config.PLAYER.SPEED;
+      this.y -= Math.ceil(config.PLAYER.SPEED * board.getHeightFactor());
     } else if (keydown.down) {
-      this.y += config.PLAYER.SPEED;
+      this.y += Math.ceil(config.PLAYER.SPEED * board.getHeightFactor());
     }
     
-    this.ensureIsInField();
+    this.ensureIsInField(board);
   }
   
   return HumanPlayer;

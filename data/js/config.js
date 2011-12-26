@@ -8,10 +8,12 @@ define({
 
   /* Game board definition */
   BOARD: {
-    HEIGHT: 500,
-    WIDTH: 700,
     FPS: 60,
-    OUTLINE_COLOR: 'white'
+    OUTLINE_COLOR: 'white',
+    SCORE: {
+      FONT_SIZE: 40,
+      MARGIN_TOP: 80
+    }
   },
 
   /* Player definitions */
@@ -19,7 +21,8 @@ define({
     WIDTH: 15,
     HEIGHT: 70,
     COLOR: 'white',
-    SPEED: 8
+    SPEED: 8,
+    MARGIN: 20
   },
 
   /* Ball definitions */

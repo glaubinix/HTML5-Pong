@@ -25,12 +25,12 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
   Game.prototype.update = function() {
     var that = this;
     this.players.forEach(function(player) {
-      player.update(that.ball);
+      player.update(that.board, that.ball);
     });
-    var result = this.ball.update(this.players);
+    var result = this.ball.update(this.board, this.players);
     if (result !== undefined) {
       this.updateScore(result);
-      this.ball.reset(result);
+      this.ball.reset(this.board, result);
     }
   }
   
@@ -44,9 +44,9 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     this.board.clear();
     this.board.drawScore(this.score);
     this.players.forEach(function(player) {
-      player.draw(that.board.getCanvas());
+      player.draw(that.board);
     });
-    this.ball.draw(this.board.getCanvas());    
+    this.ball.draw(this.board);    
   }
   
   /**
