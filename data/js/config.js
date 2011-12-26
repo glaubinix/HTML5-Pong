@@ -18,7 +18,7 @@ define({
 
   /* Player definitions */
   PLAYER: {
-    WIDTH: 15,
+    WIDTH: 13,
     HEIGHT: 70,
     COLOR: 'white',
     SPEED: 8,

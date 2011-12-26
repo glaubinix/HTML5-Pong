@@ -1,5 +1,5 @@
 define(['./config'], function(config) {
-  
+
   /**
    * Basic class constructor.
    */
@@ -16,6 +16,7 @@ define(['./config'], function(config) {
   /**
    * Updates the balls status
    *
+   * @param {Object} board The board the ball is moving on.
    * @param {Array} players An array of player objects we need to compare whether the ball hits a player.
    *
    * @return void
@@ -42,19 +43,19 @@ define(['./config'], function(config) {
     
     /* check player collision */
     if (this.direction.x < 0) {
-      if (this.x - this.radius <= players[0].x * board.getWidthFactor() + players[0].width * board.getWidthFactor()) {
-        if (this.y + this.radius > players[0].y && this.y - this.radius < players[0].y + Math.ceil(players[0].height * board.getHeightFactor())) {
-          var pos = this.y - players[0].y - Math.ceil(players[0].height * board.getHeightFactor()) / 2;
-          this.direction.x = config.BALL.SPEED * Math.cos(Math.PI * pos / Math.ceil(players[0].height * board.getHeightFactor()));
-          this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / Math.ceil(players[0].height * board.getHeightFactor()), 0.8));
+      if (this.x - this.radius <= players[0].getX(board) + players[0].getWidth(board)) {
+        if (this.y + this.radius > players[0].y && this.y - this.radius < players[0].y + players[0].getHeight(board)) {
+          var pos = this.y - players[0].y - players[0].getHeight(board) / 2;
+          this.direction.x = config.BALL.SPEED * Math.cos(Math.PI * pos / players[0].getHeight(board));
+          this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / players[0].getHeight(board), 0.8));
         }
       }
     } else {
-      if (this.x + this.radius >= players[1].x * board.getWidthFactor()) {
-          if (this.y > players[1].y && this.y < players[1].y + Math.ceil(players[0].height * board.getHeightFactor())) {
-            var pos = this.y - players[1].y - Math.ceil(players[0].height * board.getHeightFactor()) / 2;
-            this.direction.x = -config.BALL.SPEED * Math.cos(Math.PI * pos / Math.ceil(players[0].height * board.getHeightFactor()));
-            this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / Math.ceil(players[0].height * board.getHeightFactor()), 0.8));
+      if (this.x + this.radius >= players[1].getX(board)) {
+          if (this.y > players[1].y && this.y < players[1].y + players[0].getHeight(board)) {
+            var pos = this.y - players[1].y - players[0].getHeight(board) / 2;
+            this.direction.x = -config.BALL.SPEED * Math.cos(Math.PI * pos / players[0].getHeight(board));
+            this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / players[0].getHeight(board), 0.8));
           }
         }
     }
@@ -75,6 +76,14 @@ define(['./config'], function(config) {
     canvas.fill();
   }
 
+  /**
+   * Resets the ball to its origin to restart the game after someone scored.
+   *
+   * @param {Obejct} board The board the ball is moving on.
+   * @param {String} result The result string indicating on which side the ball was out.
+   *
+   * @return void
+   */
   Ball.prototype.reset = function(board, result) {
     this.x = board.getCanvas().canvas.width / 2;
     this.y = board.getCanvas().canvas.height / 2;
@@ -83,7 +92,12 @@ define(['./config'], function(config) {
       y: 0
     };
   }
-  
+
+  /**
+   * Returns the balls current position.
+   *
+   * @return {Object} Obejct containing x and y position of the ball.
+   */
   Ball.prototype.getPosition = function() {
     return position = {
       x: this.x,
@@ -92,4 +106,5 @@ define(['./config'], function(config) {
   }
 
   return new Ball();
+
 });

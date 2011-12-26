@@ -16,7 +16,7 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
       right: 0
     }
   }
-  
+
   /**
    * Game update function, updates all the games elements.
    *
@@ -33,7 +33,7 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
       this.ball.reset(this.board, result);
     }
   }
-  
+
   /**
    * Game drawing function, draws all the elements onto the canvas.
    *
@@ -48,9 +48,11 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
     });
     this.ball.draw(this.board);    
   }
-  
+
   /**
-   * Updates the score board
+   * Updates the score board.
+   *
+   * @param {Object} The score object containing points for left and right.
    *
    * @return void
    */
@@ -61,6 +63,7 @@ define(['require', './config', './npcplayer', './humanplayer', './board', './bal
       this.score.left += 1;
     }
   }
-  
+
   return Game;
+
 });
