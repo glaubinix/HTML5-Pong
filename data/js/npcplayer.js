@@ -21,12 +21,14 @@ define(["./config", "./player"], function(config, Player) {
    */
   NpcPlayer.prototype.update = function(ball) {
     var ball_pos = ball.getPosition();
-    if (this.y + this.height / 2 > ball_pos.y) {
-      this.y -= config.PLAYER.SPEED;
-    } else if (this.y + this.height / 2 < ball_pos.y) {
-      this.y += config.PLAYER.SPEED;
+    if (Math.abs(this.y + this.height / 2 - ball_pos.y) > config.PLAYER.SPEED) {
+      if (this.y + this.height / 2 > ball_pos.y) {
+        this.y -= config.PLAYER.SPEED;
+      } else if (this.y + this.height / 2 < ball_pos.y) {
+        this.y += config.PLAYER.SPEED;
+      }
+      this.ensureIsInField();
     }
-    this.ensureIsInField();
   }
   
   return NpcPlayer;

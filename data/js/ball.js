@@ -30,8 +30,14 @@ define(['./config'], function(config) {
     }
     
     /* check wall collision */
-    if (this.y - this.radius <= 0 || this.y + this.radius >= config.CANVAS.HEIGHT) {
-      this.direction.y *= -1;
+    if (this.y - this.radius <= 0) {
+      if (this.direction.y < 0) {
+        this.direction.y *= -1; 
+      }
+    } else if (this.y + this.radius >= config.CANVAS.HEIGHT) {
+      if (this.direction.y > 0) {
+        this.direction.y *= -1; 
+      }
     }
     
     /* check player collision */
@@ -40,7 +46,7 @@ define(['./config'], function(config) {
         if (this.y + this.radius > players[0].y && this.y - this.radius < players[0].y + players[0].height) {
           var pos = this.y - players[0].y - players[0].height / 2;
           this.direction.x = config.BALL.SPEED * Math.cos(Math.PI * pos / players[0].height);
-          this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * pos / players[0].height);
+          this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / players[0].height, 0.8));
         }
       }
     } else {
@@ -48,7 +54,7 @@ define(['./config'], function(config) {
           if (this.y > players[1].y && this.y < players[1].y + players[1].height) {
             var pos = this.y - players[1].y - players[1].height / 2;
             this.direction.x = -config.BALL.SPEED * Math.cos(Math.PI * pos / players[1].height);
-            this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * pos / players[1].height);
+            this.direction.y = config.BALL.SPEED * Math.sin(Math.PI * Math.min(pos / players[1].height, 0.8));
           }
         }
     }

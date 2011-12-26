@@ -7,6 +7,7 @@ define(["./config"], function(config) {
     var canvas_element = $("<canvas width='" + config.CANVAS.WIDTH + "' height='" + config.CANVAS.HEIGHT + "' style='background-color:black'></canvas>");
     canvas_element.appendTo('body');
     this.canvas = canvas_element.get(0).getContext("2d");
+    this.canvas.font = "80px Helvetica, Arial";
   }
   
   /**
@@ -35,7 +36,6 @@ define(["./config"], function(config) {
    * @return void
    */
   Board.prototype.drawScore = function(score) {
-    this.canvas.font = "80px Helvetica, Arial";
     this.canvas.fillText(score.left, config.CANVAS.WIDTH / 4, 100);
     this.canvas.fillText(score.right, config.CANVAS.WIDTH * 3 / 4 - 30, 100);
   }

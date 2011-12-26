@@ -17,16 +17,16 @@ define({
   /* Player definitions */
   PLAYER: {
     WIDTH: 15,
-    HEIGHT: 60,
+    HEIGHT: 70,
     COLOR: 'white',
-    SPEED: 5 
+    SPEED: 8
   },
 
   /* Ball definitions */
   BALL: {
     COLOR: 'white',
     RADIUS: 8,
-    SPEED: 11
+    SPEED: 13
   }
 
 });
